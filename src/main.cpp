@@ -1,6 +1,7 @@
 #include <Arduino.h>
 
 #include <ros.h>
+#include <std_msgs/Empty.h>
 
 /* BOARD */
 int latchPin = 8;
@@ -13,15 +14,18 @@ const int MAXPINS = 8 * REGISTERS;
 
 byte *reg_state;
 
-/* ROS */
-ros::NodeHandle node;
-
-
-
-
 void regWrite(int pin, bool state);
 void activateWaitDeactivate(int *pins, int size, int waitTime);
 void resetRegisters();
+
+
+/* ROS */
+ros::NodeHandle node;
+
+void test_msgCallBack(const std_msgs::Empty& msg);
+ros::Subscriber<std_msgs::Empty> test_subscriber("toggle", &test_msgCallBack);
+
+
 
 void setup()
 {
@@ -40,17 +44,22 @@ void setup()
 
   /* ROS */
 
-
-  delay(1500);
-  int testPins[] = {2, 3, 4, 8, 12, 14};
-  int s = sizeof(testPins) / sizeof(int);
-  activateWaitDeactivate(testPins, s, 1000);
+  node.initNode();
+  node.subscribe(test_subscriber);
+  
 }
 
 void loop()
 {
   node.spinOnce();
   delay(1);
+}
+
+void test_msgCallBack(const std_msgs::Empty& msg)
+{
+  int testPins[] = {2, 3, 4, 8, 12, 14};
+  int s = sizeof(testPins) / sizeof(int);
+  activateWaitDeactivate(testPins, s, 1000);
 }
 
 void activateWaitDeactivate(int *pins, int size, int waitTime)
