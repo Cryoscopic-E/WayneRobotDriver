@@ -11,12 +11,6 @@ Required to install: [rosserial](http://wiki.ros.org/rosserial)
 ` git clone https://github.com/Cryoscopic-E/WayneRobotDriver `
 
 
-## Arduino Setup:
-
-` cd WayneRobotDriver/lib`
-
-`rosrun rosserial_arduino make_libraries.py .`
-
 ## ROS Setup:
 
 `cd ros_wayne_ws `
@@ -24,3 +18,11 @@ Required to install: [rosserial](http://wiki.ros.org/rosserial)
 `catkin_make`
 
 `source ./devel/setup.bash`
+
+
+## Arduino Setup:
+
+` cd WayneRobotDriver/lib`
+
+`rosrun rosserial_arduino make_libraries.py .`
+

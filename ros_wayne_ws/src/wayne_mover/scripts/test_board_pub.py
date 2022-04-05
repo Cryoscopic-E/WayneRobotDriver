@@ -1,6 +1,3 @@
-from nis import cat
-from operator import le
-import sys
 from time import sleep
 import rospy
 from std_msgs.msg import Empty
