@@ -80,7 +80,7 @@ void loop()
   // pubResisterState.publish(&registerState);
 
   node.spinOnce();
-  delay(100);
+  delay(1);
 }
 
 // void setupRegBuffer()
