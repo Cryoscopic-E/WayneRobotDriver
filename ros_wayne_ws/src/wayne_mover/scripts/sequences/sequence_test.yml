@@ -1,0 +1,6 @@
+- action: "Inflate Front"
+  seconds: 0.5
+- action: "Inflate Middle"
+  seconds: 0.5
+- action: "Deflate All Not Front"
+  seconds: 5

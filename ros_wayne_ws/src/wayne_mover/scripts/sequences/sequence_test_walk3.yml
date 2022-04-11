@@ -1,0 +1,8 @@
+- action: "Inflate All Legs"
+  seconds: 0.4
+- action: "Deflate Rear"
+  seconds: 6
+- action: "Deflate Middle"
+  seconds: 6
+- action: "Deflate Front"
+  seconds: 6

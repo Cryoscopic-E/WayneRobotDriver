@@ -1,0 +1,4 @@
+- action: "Inflate Middle"
+  seconds: 0.5
+- action: "Deflate Middle"
+  seconds: 4

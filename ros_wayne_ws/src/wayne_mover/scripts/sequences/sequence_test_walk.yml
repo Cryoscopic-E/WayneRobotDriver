@@ -1,0 +1,12 @@
+- action: "Inflate Front"
+  seconds: 0.3
+- action: "Deflate All Not Front"
+  seconds: 7
+- action: "Inflate Middle"
+  seconds: 0.3
+- action: "Deflate All Not Middle"
+  seconds: 7
+- action: "Inflate Rear"
+  seconds: 0.3
+- action: "Deflate All Not Rear"
+  seconds: 7

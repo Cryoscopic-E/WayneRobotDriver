@@ -1,0 +1,4 @@
+- action: "Inflate Rear"
+  seconds: 0.5
+- action: "Deflate Rear"
+  seconds: 4

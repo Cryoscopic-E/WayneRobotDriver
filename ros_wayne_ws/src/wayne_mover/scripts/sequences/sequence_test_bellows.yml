@@ -1,0 +1,21 @@
+- action: "Inflate FR Bellow"
+  seconds: 0.3
+- action: "Deflate FR Bellow"
+  seconds: 2
+- action: "Inflate FL Bellow"
+  seconds: 0.3
+- action: "Deflate FL Bellow"
+  seconds: 2
+
+# - action: "Inflate BR Bellow"
+#   seconds: 0.5
+# - action: "Deflate BR Bellow"
+#   seconds: 2
+# - action: "Inflate FL Bellow"
+#   seconds: 1
+# - action: "Deflate FL Bellow"
+#   seconds: 2
+# - action: "Inflate BL Bellow"
+#   seconds: 1
+# - action: "Deflate BL Bellow"
+#   seconds: 2

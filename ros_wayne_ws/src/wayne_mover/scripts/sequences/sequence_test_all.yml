@@ -1,0 +1,32 @@
+- action: "Inflate Front"
+  seconds: 5
+- action: "Deflate Front"
+  seconds: 5
+- action: "Inflate Middle"
+  seconds: 5
+- action: "Deflate Middle"
+  seconds: 5
+- action: "Inflate Rear"
+  seconds: 5
+- action: "Deflate Rear"
+  seconds: 5
+- action: "Inflate FL Bellow"
+  seconds: 5
+- action: "Deflate FL Bellow"
+  seconds: 5
+- action: "Inflate FR Bellow"
+  seconds: 5
+- action: "Deflate FR Bellow"
+  seconds: 5
+- action: "Inflate BL Bellow"
+  seconds: 5
+- action: "Deflate BL Bellow"
+  seconds: 5
+- action: "Inflate BR Bellow"
+  seconds: 5
+- action: "Deflate BR Bellow"
+  seconds: 5
+- action: "Inflate All"
+  seconds: 5
+- action: "Deflate All"
+  seconds: 5
