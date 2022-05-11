@@ -4,7 +4,11 @@ PlatformIO project for VScode.
 
 This project contains the arduino driver code for wayne and the ROS interface.
 
-Required to install: [rosserial](http://wiki.ros.org/rosserial)
+
+
+Required to install: 
+- [Ros Noetic](http://wiki.ros.org/noetic)
+- [rosserial](http://wiki.ros.org/rosserial)
 
 ## Clone the repo:
 
@@ -13,7 +17,7 @@ Required to install: [rosserial](http://wiki.ros.org/rosserial)
 
 ## ROS Setup:
 
-`cd ros_wayne_ws `
+`cd WayneRobotDriver/ros_wayne_ws `
 
 `catkin_make`
 
@@ -22,7 +26,7 @@ Required to install: [rosserial](http://wiki.ros.org/rosserial)
 
 ## Arduino Setup:
 
-` cd WayneRobotDriver/lib`
+`cd WayneRobotDriver/lib`
 
 `rosrun rosserial_arduino make_libraries.py .`
 

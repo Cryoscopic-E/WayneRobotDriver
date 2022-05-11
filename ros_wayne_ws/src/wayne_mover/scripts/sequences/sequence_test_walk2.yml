@@ -1,8 +1,8 @@
-- action: "Inflate FR Bellow and Middle"
-  seconds: 0.3
-- action: "Deflate All"
-  seconds: 4
-- action: "Inflate FL Bellow and Middle"
-  seconds: 0.3
-- action: "Deflate All"
-  seconds: 4
+- action: "Inflate FRBR Bellow"
+  seconds: 0.4
+- action: "Deflate FRBR Bellow"
+  seconds: 3
+- action: "Inflate FLBL Bellow"
+  seconds: 0.4
+- action: "Deflate FLBL Bellow"
+  seconds: 3

@@ -1,4 +1,4 @@
 - action: "Inflate Front"
-  seconds: 0.4
+  seconds: 0.6
 - action: "Deflate Front"
-  seconds: 5
+  seconds: 2
