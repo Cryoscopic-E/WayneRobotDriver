@@ -30,3 +30,11 @@ Required to install:
 
 `rosrun rosserial_arduino make_libraries.py .`
 
+
+# RUN WAYNE CONTROL
+
+`cd WayneRobotDriver/ros_wayne_ws `
+
+`source ./devel/setup.bash`
+
+`roslaunch wayne_mover wayne_valves.launch`
