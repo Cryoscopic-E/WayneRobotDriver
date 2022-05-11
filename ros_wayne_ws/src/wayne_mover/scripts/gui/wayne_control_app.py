@@ -2,9 +2,9 @@ from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QApplication
 from functools import partial
 import sys
-import wayne_gui
+import wayne_control as gui
 
-class WayneControlApp(QtWidgets.QMainWindow, wayne_gui.Ui_MainWindow):
+class WayneControlApp(QtWidgets.QMainWindow, gui.Ui_MainWindow):
     def __init__(self, parent=None):
         super(WayneControlApp, self).__init__(parent)
         self.setupUi(self)
@@ -31,8 +31,10 @@ class WayneControlApp(QtWidgets.QMainWindow, wayne_gui.Ui_MainWindow):
             spinbox.valueChanged.connect(partial(self.handle_spinbox_change, index, spinbox))
 
 
-        self.deflateButton.clicked.connect(self.handle_deflate)
-        self.resetButton.clicked.connect(self.handle_reset)
+        self.runOnceButton.clicked.connect(self.handle_run_once)
+        self.runButton.pressed.connect(self.handle_run_start)
+        self.runButton.released.connect(self.handle_run_stop)
+        self.stopButton.clicked.connect(self.stop)
 
     def handle_spinbox_change(self,index, spinbox):
         if spinbox.value() == 1:
@@ -40,13 +42,17 @@ class WayneControlApp(QtWidgets.QMainWindow, wayne_gui.Ui_MainWindow):
         else:
             spinbox.setStyleSheet('background-color:white')
 
-    def handle_deflate(self):
-        for spinbox in self.spin_boxes.values():
-            spinbox.setValue(1)
+    def handle_run_once(self):
+        print("Start sequence once")
 
-    def handle_reset(self):
-        for spinbox in self.spin_boxes.values():
-            spinbox.setValue(0)
+    def handle_run_start(self):
+        print("Start sequence")
+
+    def handle_run_stop(self):
+        print("Stop sequence")
+
+    def stop(self):
+        print("DEFLATE & RESET")
 
 def main():
     app = QApplication(sys.argv)
