@@ -1,21 +1,31 @@
+import string
 import rospy
+import enum
 import yaml
 import os
 from time import sleep
 from std_msgs.msg import UInt8MultiArray
-# from std_srvs.srv import Trigger
+
+class WayneActions(enum.Enum):
+    inflate = 0
+    deflate = 1
+    inflate_all = 2
+    deflate_all = 3
+    inflate_all_but = 4
+    deflate_all_but = 5
+
+
 
 VALVES_PINS = {
     "inflate":0,
     "deflate":1,
-    "fll": 2,
-    "frl":4,
-    "mll":6,
-    "mrl":8,
-    "bll":10,
-    "brl":10,
-    "lb":12,
-    "rb":14
+    "rl": 2,
+    "mll":4,
+    "fll":6,
+    "frl":8,
+    "mrl":10,
+    "rb":12,
+    "lb":14
 }
 
 def reset_valves_list():
@@ -83,6 +93,40 @@ def wait_for_sub(pub):
     rospy.loginfo('Starting sequence..')
     rospy.sleep(1)
 
+def run_action(pub,action : int, sec: float, *args):
+    '''
+    Run action on the Robot
+
+    Parameters
+    ----------
+    pub: 
+        Action publisher
+    action : int
+        A number representing one of the WayneAction enum
+    sec : float
+        Time (seconds) to continue to run the action
+    *args: string
+        The Robot parts to activate with the action, see VALVES_PINS dictionary keys
+    '''
+
+    if action == WayneActions.inflate:
+        a = inflate(*args)
+    elif action == WayneActions.deflate:
+        a = deflate(*args)
+    elif action == WayneActions.inflate_all:
+        a = inflate_all(*args)
+    elif action == WayneActions.deflate_all:
+        a = deflate_all(*args)
+    elif action == WayneActions.inflate_all_but:
+        a = inflate_all_but(*args)
+    elif action == WayneActions.deflate_all_but:
+        a = deflate_all_but(*args)
+    else:
+        return
+    
+    publish(pub, a)
+    rospy.sleep(sec)
+
 def main():
     rospy.init_node('test_wayne_board', anonymous=True)
     pub = rospy.Publisher('register_state', UInt8MultiArray, queue_size=10)
@@ -90,8 +134,12 @@ def main():
 
     wait_for_sub(pub)
 
-    action = deflate_all()
-    publish(pub,action)
+
+    # DO ACTION HERE
+    run_action(pub, WayneActions.inflate, 1.0, "fll", "mll")
+    run_action(pub,WayneActions.deflate, 5.0, "fll", "mll")
+    reset(pub)
+
 
 # def main():
 #     # add actions and sequences folder
