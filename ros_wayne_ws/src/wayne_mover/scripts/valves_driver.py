@@ -19,30 +19,16 @@ class WayneActions(enum.Enum):
     hold = 6
     inflate_xs_deflate_ys = 7
 
-# config with rear legs together
-# VALVES_PINS = {
-#     "inflate":0,
-#     "deflate":1,
-#     "rl": 2,
-#     "mll":4,
-#     "fll":6,
-#     "frl":8,
-#     "mrl":10,
-#     "rb":12,
-#     "lb":14
-# }
-
-# config with middle legs together
 VALVES_PINS = {
     "inflate":0,
     "deflate":1,
-    "ml": 2,
-    "rll":4,
-    "fll":6,
-    "frl":8,
-    "rrl":10,
-    "rb":12,
-    "lb":14
+    "flp": 2, # front left parapodia
+    "frp":4,  # front right parapodis
+    "mp":6,   # middle parapodia
+    "blp":8,  # back left parapodia
+    "brp":10, # back right parapodia
+    "ld":12,  # left directional
+    "rd":14   # right directional
 }
 
 
@@ -149,10 +135,10 @@ def run_action(pub, action : int, sec: float, **kwargs):
     try:
         if action == WayneActions.inflate:
             a = inflate(**kwargs)
-            print(' '*12 + f'Inflate: {a}')
+            # print(' '*12 + f'Inflate: {a}')
         elif action == WayneActions.deflate:
             a = deflate(**kwargs)
-            print(' '*12 + f'Deflate: {a}')
+            # print(' '*12 + f'Deflate: {a}')
         elif action == WayneActions.inflate_all:
             a = inflate_all(**kwargs)
         elif action == WayneActions.deflate_all:
@@ -167,7 +153,7 @@ def run_action(pub, action : int, sec: float, **kwargs):
             a = hold()
         elif action == WayneActions.inflate_xs_deflate_ys:
             a = inflate_xs_deflate_ys(**kwargs)
-            print(f'Inflate and Deflate: {a}')
+            # print(f'Inflate and Deflate: {a}')
         else:
             return
     except Exception as e:
@@ -186,19 +172,66 @@ def main():
 
     wait_for_sub(pub)
     # DO ACTION HERE
-    
-    # run_action(pub, WayneActions.inflate, 0.3, inflate=['rb', 'frl'])
-    # run_action(pub, WayneActions.deflate, 2.0, deflate=['rb', 'frl'])
-    # run_action(pub, WayneActions.hold, 5.0)
-    # run_action(pub, WayneActions.inflate_all, 0.3)
-    # run_action(pub, WayneActions.deflate_all, 2.0)
-    # run_action(pub, WayneActions.inflate_all_but, 0.3, all_but=['rb', 'frl'])
-    # run_action(pub, WayneActions.deflate_all_but, 2.0, all_but=['rb', 'frl'])
-    # run_action(pub, WayneActions.inflate_xs_deflate_ys, 0.4, inflate=['rb', 'frl'], deflate=['lb', 'rll'])
+    # Actuators: flp frp mp blp brp ld rd
+
+    leg_full = 0.2
+    back_leg_full = 0.05
+    dir_full = 0.2
+    leg_deflate_full = 4.0
+    quick_deflate = 1.0
+
+    run_action(pub, WayneActions.deflate_all, 2.0)
+
+
+    run_action(pub, WayneActions.inflate, 0.225, inflate=['flp', 'frp'])
+    run_action(pub, WayneActions.inflate, 0.2, inflate=['mp'])
+    run_action(pub, WayneActions.deflate_all_but, 0.75, all_but=['mp'])
+
+    i = 0
+    # while (i < 2):
+    #     run_action(pub, WayneActions.inflate_xs_deflate_ys, 0.11, inflate=['blp', 'brp'], deflate=['flp', 'frp'])
+    #     run_action(pub, WayneActions.deflate, 1.0, deflate=['flp', 'frp'])
+    #     run_action(pub, WayneActions.inflate_xs_deflate_ys, 0.15, inflate=['flp', 'frp'], deflate=['mp'])
+    #     run_action(pub, WayneActions.deflate, 1.0, deflate=['mp'])
+    #     run_action(pub, WayneActions.inflate_xs_deflate_ys, 0.225, inflate=['mp'], deflate=['blp', 'brp'])
+    #     run_action(pub, WayneActions.deflate, 0.5, deflate=['blp', 'brp'])
+    #     run_action(pub, WayneActions.hold, 5.0)
+    #     run_action(pub, WayneActions.deflate_all, 0.5)
+    #     i += 1
+    while (i < 4):
+        run_action(pub, WayneActions.inflate_xs_deflate_ys, 0.11, inflate=['blp', 'brp'], deflate=['flp', 'frp'])
+        run_action(pub, WayneActions.deflate, 1.5, deflate=['flp', 'frp'])
+        run_action(pub, WayneActions.inflate_xs_deflate_ys, 0.15, inflate=['flp', 'frp'], deflate=['mp'])
+        run_action(pub, WayneActions.deflate, 1.5, deflate=['mp'])
+        run_action(pub, WayneActions.inflate_xs_deflate_ys, 0.225, inflate=['mp'], deflate=['blp', 'brp'])
+        run_action(pub, WayneActions.deflate, 1.0, deflate=['blp', 'brp'])
+        i += 1
+
+
+
+
+    # run_action(pub, WayneActions.inflate, 0.225, inflate=['flp', 'frp'])
+    # run_action(pub, WayneActions.inflate, 0.2, inflate=['mp'])
+    # run_action(pub, WayneActions.deflate_all_but, 1.0, all_but=['mp'])
+    # run_action(pub, WayneActions.inflate_xs_deflate_ys, 0.1, inflate=['blp', 'brp'], deflate=['flp', 'frp'])
+    # run_action(pub, WayneActions.deflate, 1.0, deflate=['flp', 'frp'])
+    # run_action(pub, WayneActions.inflate_xs_deflate_ys, 0.2, inflate=['flp', 'frp'], deflate=['mp', 'blp', 'brp'])
+    # run_action(pub, WayneActions.deflate, 0.5, deflate=['blp', 'brp'])
+    # run_action(pub, WayneActions.inflate_xs_deflate_ys, 0.2, inflate=['mp'], deflate=['blp', 'brp'])
+
     # run_action(pub, WayneActions.deflate_all, 2.0)
 
-    run_action(pub, WayneActions.deflate_all, 3.0)
+    # run_action(pub, WayneActions.inflate, 0.225, inflate=['flp', 'frp'])
+    # run_action(pub, WayneActions.inflate, 0.2, inflate=['mp'])
+    # run_action(pub, WayneActions.deflate_all_but, 1.0, all_but=['mp'])
+    # run_action(pub, WayneActions.inflate_xs_deflate_ys, 0.1, inflate=['blp', 'brp'], deflate=['flp', 'frp'])
+    # run_action(pub, WayneActions.deflate, 1.0, deflate=['flp', 'frp'])
+    # run_action(pub, WayneActions.inflate_xs_deflate_ys, 0.2, inflate=['flp', 'frp'], deflate=['mp', 'blp', 'brp'])
+    # run_action(pub, WayneActions.deflate, 0.5, deflate=['blp', 'brp'])
+    # run_action(pub, WayneActions.inflate_xs_deflate_ys, 0.2, inflate=['mp'], deflate=['blp', 'brp'])
 
+
+    run_action(pub, WayneActions.deflate_all, 2.0)
     reset(pub)
 
 # def main():
