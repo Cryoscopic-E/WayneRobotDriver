@@ -174,124 +174,88 @@ def main():
     # DO ACTION HERE
     # Actuators: flp frp mp blp brp ld rd
 
-    leg_full = 0.2
-    back_leg_full = 0.05
-    dir_full = 0.2
-    leg_deflate_full = 4.0
-    quick_deflate = 1.0
+    walk = True
+    # wiggle = False
+    # crawl = False
+    # floaty = False
 
-    run_action(pub, WayneActions.deflate_all, 2.0)
+    # if (walk + wiggle + crawl + floaty) > 1:
+    #     reset(pub)
+    #     print("WARNING: more than one movement sequence selected.")
+    #     return
 
+    if walk:
+        run_action(pub, WayneActions.deflate_all, 2.0)
 
-    run_action(pub, WayneActions.inflate, 0.225, inflate=['flp', 'frp'])
-    run_action(pub, WayneActions.inflate, 0.2, inflate=['mp'])
-    run_action(pub, WayneActions.deflate_all_but, 0.75, all_but=['mp'])
+        # run_action(pub, WayneActions.inflate, 0.2, inflate=['flp', 'frp'])
+        # run_action(pub, WayneActions.inflate, 0.2, inflate=['mp'])
+        run_action(pub, WayneActions.inflate, 0.1, inflate=['flp', 'frp'])
+        run_action(pub, WayneActions.inflate, 0.1, inflate=['mp'])
 
-    i = 0
-    # while (i < 2):
-    #     run_action(pub, WayneActions.inflate_xs_deflate_ys, 0.11, inflate=['blp', 'brp'], deflate=['flp', 'frp'])
-    #     run_action(pub, WayneActions.deflate, 1.0, deflate=['flp', 'frp'])
-    #     run_action(pub, WayneActions.inflate_xs_deflate_ys, 0.15, inflate=['flp', 'frp'], deflate=['mp'])
-    #     run_action(pub, WayneActions.deflate, 1.0, deflate=['mp'])
-    #     run_action(pub, WayneActions.inflate_xs_deflate_ys, 0.225, inflate=['mp'], deflate=['blp', 'brp'])
-    #     run_action(pub, WayneActions.deflate, 0.5, deflate=['blp', 'brp'])
-    #     run_action(pub, WayneActions.hold, 5.0)
-    #     run_action(pub, WayneActions.deflate_all, 0.5)
-    #     i += 1
-    while (i < 4):
-        run_action(pub, WayneActions.inflate_xs_deflate_ys, 0.11, inflate=['blp', 'brp'], deflate=['flp', 'frp'])
-        run_action(pub, WayneActions.deflate, 1.5, deflate=['flp', 'frp'])
-        run_action(pub, WayneActions.inflate_xs_deflate_ys, 0.15, inflate=['flp', 'frp'], deflate=['mp'])
-        run_action(pub, WayneActions.deflate, 1.5, deflate=['mp'])
-        run_action(pub, WayneActions.inflate_xs_deflate_ys, 0.225, inflate=['mp'], deflate=['blp', 'brp'])
-        run_action(pub, WayneActions.deflate, 1.0, deflate=['blp', 'brp'])
-        i += 1
+        run_action(pub, WayneActions.deflate_all_but, 0.75, all_but=['mp', 'ld', 'rd'])
 
+        i = 0
+        while (i < 6):
+            i += 1
+            # maybe reduce deflates in the morning
+            run_action(pub, WayneActions.inflate_xs_deflate_ys, 0.11, inflate=['blp', 'brp'], deflate=['flp', 'frp'])
+            run_action(pub, WayneActions.deflate, 1.5, deflate=['flp', 'frp'])
+            run_action(pub, WayneActions.inflate_xs_deflate_ys, 0.15, inflate=['flp', 'frp'], deflate=['mp'])
+            run_action(pub, WayneActions.deflate, 1.5, deflate=['mp'])
+            run_action(pub, WayneActions.inflate_xs_deflate_ys, 0.1, inflate=['mp'], deflate=['blp', 'brp'])
+            # run_action(pub, WayneActions.inflate_xs_deflate_ys, 0.225, inflate=['mp'], deflate=['blp', 'brp'])
+            run_action(pub, WayneActions.deflate, 1.0, deflate=['blp', 'brp'])
 
+            if (i % 6 == 0):
+                run_action(pub, WayneActions.deflate_all, 2.0)
 
+        run_action(pub, WayneActions.deflate_all, 2.0)
+        reset(pub)
 
-    # run_action(pub, WayneActions.inflate, 0.225, inflate=['flp', 'frp'])
-    # run_action(pub, WayneActions.inflate, 0.2, inflate=['mp'])
-    # run_action(pub, WayneActions.deflate_all_but, 1.0, all_but=['mp'])
-    # run_action(pub, WayneActions.inflate_xs_deflate_ys, 0.1, inflate=['blp', 'brp'], deflate=['flp', 'frp'])
-    # run_action(pub, WayneActions.deflate, 1.0, deflate=['flp', 'frp'])
-    # run_action(pub, WayneActions.inflate_xs_deflate_ys, 0.2, inflate=['flp', 'frp'], deflate=['mp', 'blp', 'brp'])
-    # run_action(pub, WayneActions.deflate, 0.5, deflate=['blp', 'brp'])
-    # run_action(pub, WayneActions.inflate_xs_deflate_ys, 0.2, inflate=['mp'], deflate=['blp', 'brp'])
+    # if wiggle:
+    #     # its a wiggly party
+    #     run_action(pub, WayneActions.inflate, 0.08, inflate=['flp', 'frp', 'mp', 'blp', 'brp'])
 
-    # run_action(pub, WayneActions.deflate_all, 2.0)
+    #     run_action(pub, WayneActions.inflate, 0.175, inflate=['ld'])
+    #     i = 0
+    #     while (i < 4):
+    #         run_action(pub, WayneActions.deflate, 1.2, deflate=['ld'])
+    #         run_action(pub, WayneActions.inflate_xs_deflate_ys, 0.175, inflate=['rd'], deflate=['ld'])
+    #         run_action(pub, WayneActions.deflate, 1.2, deflate=['rd'])
+    #         run_action(pub, WayneActions.inflate_xs_deflate_ys, 0.175, inflate=['ld'], deflate=['rd'])
+    #         i += 1
+    #     run_action(pub, WayneActions.deflate, 1.2, deflate=['ld'])
+    #     run_action(pub, WayneActions.deflate_all, 2.0)
+    #     reset(pub)
 
-    # run_action(pub, WayneActions.inflate, 0.225, inflate=['flp', 'frp'])
-    # run_action(pub, WayneActions.inflate, 0.2, inflate=['mp'])
-    # run_action(pub, WayneActions.deflate_all_but, 1.0, all_but=['mp'])
-    # run_action(pub, WayneActions.inflate_xs_deflate_ys, 0.1, inflate=['blp', 'brp'], deflate=['flp', 'frp'])
-    # run_action(pub, WayneActions.deflate, 1.0, deflate=['flp', 'frp'])
-    # run_action(pub, WayneActions.inflate_xs_deflate_ys, 0.2, inflate=['flp', 'frp'], deflate=['mp', 'blp', 'brp'])
-    # run_action(pub, WayneActions.deflate, 0.5, deflate=['blp', 'brp'])
-    # run_action(pub, WayneActions.inflate_xs_deflate_ys, 0.2, inflate=['mp'], deflate=['blp', 'brp'])
+    # if crawl:
+    #     run_action(pub, WayneActions.inflate, 0.2, inflate=['ld', 'frp', 'brp'])
+    #     i = 0
+    #     while (i < 1):
+    #         run_action(pub , WayneActions.deflate, 1.2, deflate=['ld', 'frp', 'brp'])
+    #         run_action(pub, WayneActions.inflate_xs_deflate_ys, 0.2, inflate=['rd', 'flp', 'blp'], deflate=['ld', 'frp', 'brp'])
+    #         run_action(pub , WayneActions.deflate, 1.2, deflate=['rd', 'flp', 'blp'])
+    #         run_action(pub, WayneActions.inflate_xs_deflate_ys, 0.2, inflate=['ld', 'frp', 'brp'], deflate=['rd', 'flp', 'blp'])
+    #         i += 1
+    #     run_action(pub, WayneActions.deflate, 1.5, deflate=['ld', 'frp', 'brp'])
+    #     run_action(pub, WayneActions.deflate_all, 2.0)
+    #     reset(pub)
 
+    # if floaty:
+    #     run_action(pub, WayneActions.deflate_all, 2.0)
 
-    run_action(pub, WayneActions.deflate_all, 2.0)
-    reset(pub)
+    #     run_action(pub, WayneActions.inflate, 0.05, inflate=['ld', 'rd'])
 
-# def main():
-#     # add actions and sequences folder
-#     script_folder = os.path.dirname(os.path.abspath(__file__))
-#     action_file = os.path.join(script_folder, 'sequences/actions_v2.yml')
-#     sequence_file = os.path.join(script_folder, 'sequences/sequence_test_walk2.yml')
-   
+    #     i = 0
+    #     while (i < 5):
+    #         # maybe reduce deflates in the morning
+    #         run_action(pub, WayneActions.inflate, 0.15, inflate=['blp', 'brp', 'flp', 'frp', 'mp'])
+    #         run_action(pub, WayneActions.deflate_all_but, 1.2, all_but=['ld', 'rd'])
+    #         i += 1
 
-#     # load actions
-#     with open(action_file) as file:
-#         actions = yaml.safe_load(file)
-
-#     # load sequences
-#     with open(sequence_file) as file:
-#         sequence = yaml.safe_load(file)
-
-#     rospy.init_node('test_wayne_board', anonymous=True)
-#     pub = rospy.Publisher('register_state', UInt8MultiArray, queue_size=10)
-#     rate = rospy.Rate(1)
-
-
-#     while not pub.get_num_connections() > 0:
-#         rospy.loginfo('Waiting for RegisterState subscriber')
-#         rospy.sleep(1)
-    
-#     rospy.loginfo('Starting sequence..')
-#     rospy.sleep(1)
-
-#     # --------------
-#     # --- NEEDED ---
-#     # --------------
-#     # SET HOW MANY ITERATIONS YOU QANT TO RUN #
-#     n_iter = 1
-#     for i in range(n_iter):
-#         for seq in sequence:
-#             rospy.loginfo(f'Executing {seq["action"]} for {seq["seconds"]} seconds')
-#             publish(pub, actions[seq['action']])
-#             rospy.sleep(seq['seconds'])
-
-  
-
-#     # --------------
-#     # --- NEEDED ---
-#     # --------------
-#     # SE SECONDS FOR DEFLATING ALL
-#     deflate_all_sec = 5
-
-#     # DEFLATE ALL AT THE END #
-#     rospy.loginfo(f'Executing "Deflate All" for {deflate_all_sec} seconds')
-#     publish(pub, actions['Deflate All'])
-#     rospy.sleep(deflate_all_sec)
-
-
-#     # RESETTING BEFORE CLOSING PROGRAM #
-#     rospy.loginfo("Resetting..")
-#     rate.sleep()
-#     reset(pub)
-#     rate.sleep()
-
+    #     run_action(pub, WayneActions.deflate_all, 2.0)
+    #     reset(pub)
+ 
 
 
 if __name__ == '__main__':
